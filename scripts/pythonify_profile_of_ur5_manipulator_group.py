@@ -13,11 +13,18 @@ if __name__ == '__main__':
 
     move_group = robot.get_group("manipulator")
 
-    current_joint_dict = dict(zip(
-        move_group.get_active_joints(),
-        move_group.get_current_joint_values()))
+    while not rospy.is_shutdown():
+        print ' '*20
+        print ' '*20
+        print ' '*20
+        print '='*20
+        current_joint_dict = dict(zip(
+            move_group.get_active_joints(),
+            move_group.get_current_joint_values()))
 
-    print current_joint_dict
+        print current_joint_dict
 
-    current_pose = move_group.get_current_pose().pose
-    print "Pose(position=Point(%s), orientation=Quaternion(%s))"%(str(current_pose.position).replace(':', '=').replace('\n', ','), str(current_pose.orientation).replace(':', '=').replace('\n', ','))
+        current_pose = move_group.get_current_pose().pose
+        print "Pose(position=Point(%s), orientation=Quaternion(%s))"%(str(current_pose.position).replace(':', '=').replace('\n', ','), str(current_pose.orientation).replace(':', '=').replace('\n', ','))
+
+        raw_input()
