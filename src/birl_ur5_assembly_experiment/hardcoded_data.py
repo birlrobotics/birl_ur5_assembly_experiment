@@ -7,18 +7,14 @@ ram_fixed_pick_pose = Pose(position=Point(x= 0.619046842606,y= -0.0205555205994,
 
 ram_fixed_place_pose = Pose(position=Point(x= 0.483291959469,y= 0.446571937473,z= 0.222983235428), orientation=Quaternion(x= -0.588390371948,y= 0.253616641848,z= 0.72821750823,w= 0.243258360357))
 
-
-joint_constraints = {
-    'shoulder_pan_joint': [-0.351181623229599, 1.0153117727366767],
-    'shoulder_lift_joint': [-0.577527257376092, -1.3108943839533242],
-    'elbow_joint': [0.09208634954657935, 1.5860923139572094],
-    'wrist_1_joint': [-2.8567755644687973, -0.7243984587961108],
-    'wrist_2_joint': [-pi/2, -pi/2],
-    'wrist_3_joint': [-pi/2, -pi/2],
+joint_constraints_in_degrees = {
+    'shoulder_pan_joint': [-22, 68],
+    'shoulder_lift_joint': [-135, -45],
+    'elbow_joint': [-45, 45],
+    'wrist_1_joint': [-180, 0],
+    'wrist_2_joint': [-135, -45],
+    'wrist_3_joint': [-135, -45],
 }
-
-
-
 
 right_wall_poses = [
     Pose(position=Point(x= 0.261466174855,y= -0.352523708217,z= 0.705580090699), orientation=Quaternion(x= -0.468208155841,y= 0.581463598906,z= -0.253221279465,w= 0.615272451502)),
