@@ -2,6 +2,10 @@ from geometry_msgs.msg import Pose, Point, Quaternion
 
 home_pose = Pose(position=Point(x= 0.347374056271,y= 0.0670839656857,z= 0.575880001466), orientation=Quaternion(x= -0.662637229064,y= 0.381435720055,z= 0.221088127146,w= 0.605424424813))
 
+ram_fixed_pick_pose = Pose(position=Point(x= 0.619046842606,y= -0.0205555205994,z= 0.240680352798), orientation=Quaternion(x= -0.34275951009,y= 0.642476859947,z= 0.538301547718,w= 0.424229709473))
+
+ram_fixed_place_pose = Pose(position=Point(x= 0.483291959469,y= 0.446571937473,z= 0.222983235428), orientation=Quaternion(x= -0.588390371948,y= 0.253616641848,z= 0.72821750823,w= 0.243258360357))
+
 right_wall_poses = [
     Pose(position=Point(x= 0.261466174855,y= -0.352523708217,z= 0.705580090699), orientation=Quaternion(x= -0.468208155841,y= 0.581463598906,z= -0.253221279465,w= 0.615272451502)),
     Pose(position=Point(x= 0.248320374588,y= -0.32307574581,z= 0.179985276188), orientation=Quaternion(x= -0.163624397477,y= 0.746900729607,z= 0.156404685627,w= 0.625223104961)),
