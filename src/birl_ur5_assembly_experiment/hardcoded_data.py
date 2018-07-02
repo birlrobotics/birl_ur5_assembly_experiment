@@ -5,12 +5,11 @@ home_joint_angles = {'elbow_joint': 0, 'shoulder_pan_joint': -0.2065600876872304
 
 get_vision_joint_angles = {'elbow_joint': 2.5755257093621164, 'shoulder_pan_joint': -0.17601812753047863, 'wrist_3_joint': -1.5659576718081425, 'wrist_1_joint': -2.5955913668696757, 'shoulder_lift_joint': -2.4471607016061503, 'wrist_2_joint': -1.5719682040147713}
 
-ram_fixed_pick_pose = Pose(position=Point(x= 0.451817680005,y= -0.109643459126,z= 0.0228776902664), orientation=Quaternion(x= -0.379426608875,y= 0.598536950665,z= 0.354126316265,w= 0.610232348614))
+ram_fixed_pick_pose = Pose(position=Point(x= 0.451817680005,y= -0.109643459126,z= 0.2228776902664), orientation=Quaternion(x= -0.379426608875,y= 0.598536950665,z= 0.354126316265,w= 0.610232348614))
 
-ram_fixed_place_pose = Pose(position=Point(x= 0.0619293125068,y= 0.398280870516,z= 0.043341303728), orientation=Quaternion(x= -0.693673760483,y= 0.145193951023,z= 0.687426384229,w= 0.158683322592))
+ram_fixed_place_pose = Pose(position=Point(x= 0.0619293125068,y= 0.398280870516,z= 0.243341303728), orientation=Quaternion(x= -0.693673760483,y= 0.145193951023,z= 0.687426384229,w= 0.158683322592))
 
 joint_constraints_in_degrees = {
-    'shoulder_pan_joint': [-22, 68],
     'shoulder_lift_joint': [-180, 0],
     'elbow_joint': [0, 180],
     'wrist_1_joint': [-180, 0],

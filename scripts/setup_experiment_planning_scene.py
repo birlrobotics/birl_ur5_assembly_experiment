@@ -70,7 +70,7 @@ if __name__ == '__main__':
             pose=Pose(position=Point(x=0, y=0 ,z=-desk_height/2.0), orientation=Quaternion(x=0, y=0, z=0, w=1))),
         size=(desk_length, desk_width, desk_height))
 
-    for count, wall_pose in enumerate(itertools.chain(hd.left_wall_poses, hd.right_wall_poses, hd.opposite_wall_poses)):
+    for count, wall_pose in enumerate(itertools.chain(hd.left_wall_poses, hd.right_wall_poses)):
         psi.add_sphere(
             name="wall_pose_%s"%count, 
             pose=PoseStamped(
@@ -80,7 +80,6 @@ if __name__ == '__main__':
 
     create_wall_by_box([i.position for i in hd.left_wall_poses], robot, psi, name='left_wall_box') 
     create_wall_by_box([i.position for i in hd.right_wall_poses], robot, psi, name='right_wall_box') 
-    create_wall_by_box([i.position for i in hd.opposite_wall_poses], robot, psi, name='opposite_wall_box') 
 
     rospy.sleep(1)
     rospy.loginfo(psi.get_known_object_names())
