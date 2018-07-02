@@ -5,7 +5,7 @@ import moveit_commander as mc
 
 if __name__ == '__main__':
     mc.roscpp_initialize(sys.argv) 
-    rospy.init_node("profile_ur5_node", anonymous=True)
+    rospy.init_node("profile_ur5", anonymous=True)
 
     robot = mc.RobotCommander()
     for attr in dir(robot):

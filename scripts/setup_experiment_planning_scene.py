@@ -52,7 +52,7 @@ def create_wall_by_box(wall_points, robot, psi, name):
 
 if __name__ == '__main__':
     mc.roscpp_initialize(sys.argv) 
-    rospy.init_node("ur5_moveit_test", anonymous=True)
+    rospy.init_node("setup_experiment_planning_scene", anonymous=True)
     robot = mc.RobotCommander()
     psi = mc.PlanningSceneInterface()
     rospy.sleep(1)

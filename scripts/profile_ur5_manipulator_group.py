@@ -6,7 +6,7 @@ import moveit_commander as mc
 
 if __name__ == '__main__':
     mc.roscpp_initialize(sys.argv) 
-    rospy.init_node("ur5_moveit_test", anonymous=True)
+    rospy.init_node("profile_ur5_manipulator_group", anonymous=True)
     robot = mc.RobotCommander()
 
     move_group = robot.get_group("manipulator")

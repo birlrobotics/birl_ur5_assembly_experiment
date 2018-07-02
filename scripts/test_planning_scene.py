@@ -8,7 +8,7 @@ from std_msgs.msg import Header
 
 if __name__ == '__main__':
     mc.roscpp_initialize(sys.argv) 
-    rospy.init_node("ur5_moveit_test", anonymous=True)
+    rospy.init_node("test_planning_scene", anonymous=True)
     robot = mc.RobotCommander()
     psi = mc.PlanningSceneInterface()
 

@@ -8,7 +8,7 @@ from geometry_msgs.msg import Point, Quaternion
 
 if __name__ == '__main__':
     mc.roscpp_initialize(sys.argv) 
-    rospy.init_node("ur5_moveit_test", anonymous=True, log_level=rospy.WARN)
+    rospy.init_node("pythonify_profile_of_ur5_manipulator_group", anonymous=True, log_level=rospy.WARN)
     robot = mc.RobotCommander()
 
     move_group = robot.get_group("manipulator")
