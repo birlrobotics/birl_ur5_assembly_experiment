@@ -22,9 +22,9 @@ from baxter_core_msgs.msg import (
 import tf
 import moveit_commander as mc
 
-SIM_MODE = False
-pick_hover_height = 0.1
-place_hover_height = 0.1
+SIM_MODE = True
+pick_hover_height = 0.05
+place_hover_height = 0.05
 
 class MoveToHomePose(smach.State):
     def __init__(self):
@@ -70,9 +70,9 @@ class MoveToPrePickPoseWithEmptyHand(smach.State):
         pos = pose.position
         ori = pose.orientation
         base_to_pose_mat = numpy.dot(translation_matrix((pos.x, pos.y, pos.z)), quaternion_matrix((ori.x, ori.y, ori.z, ori.w)))
-        pose.position.x -= pick_hover_height*base_to_pose_mat[0, 2]
-        pose.position.y -= pick_hover_height*base_to_pose_mat[1, 2]
-        pose.position.z -= pick_hover_height*base_to_pose_mat[2, 2]
+        pose.position.x -= pick_hover_height*base_to_pose_mat[0, 0]
+        pose.position.y -= pick_hover_height*base_to_pose_mat[1, 0]
+        pose.position.z -= pick_hover_height*base_to_pose_mat[2, 0]
         return pose
 
     def determine_successor(self): # Determine next state
@@ -113,9 +113,9 @@ class MoveToPrePickPoseWithFullHand(smach.State):
         ori = [pose.orientation.x, pose.orientation.y, pose.orientation.z, pose.orientation.w]
         listener = tf.TransformListener()
         base_to_pose_mat = listener.fromTranslationRotation(pos, ori) 
-        pose.position.x -= pick_hover_height*base_to_pose_mat[0, 2]
-        pose.position.y -= pick_hover_height*base_to_pose_mat[1, 2]
-        pose.position.z -= pick_hover_height*base_to_pose_mat[2, 2]
+        pose.position.x -= pick_hover_height*base_to_pose_mat[0, 0]
+        pose.position.y -= pick_hover_height*base_to_pose_mat[1, 0]
+        pose.position.z -= pick_hover_height*base_to_pose_mat[2, 0]
         return pose
 
     def determine_successor(self): # Determine next state
@@ -130,7 +130,7 @@ class DeterminePlacePose(smach.State):
         self.depend_on_prev_state = False # Set this flag accordingly
 
     def determine_successor(self): # Determine next state
-        DeterminePlacePose.place_pose = copy.deepcopy(hardcoded_data.place_pose)
+        DeterminePlacePose.place_pose = copy.deepcopy(hardcoded_data.ram_fixed_place_pose)
         return 'Successful'
 
 class MoveToPrePlacePoseWithFullHand(smach.State):
@@ -145,9 +145,9 @@ class MoveToPrePlacePoseWithFullHand(smach.State):
         pos = pose.position
         ori = pose.orientation
         base_to_pose_mat = numpy.dot(translation_matrix((pos.x, pos.y, pos.z)), quaternion_matrix((ori.x, ori.y, ori.z, ori.w)))
-        pose.position.x -= place_hover_height*base_to_pose_mat[0, 2]
-        pose.position.y -= place_hover_height*base_to_pose_mat[1, 2]
-        pose.position.z -= place_hover_height*base_to_pose_mat[2, 2]
+        pose.position.x -= place_hover_height*base_to_pose_mat[0, 0]
+        pose.position.y -= place_hover_height*base_to_pose_mat[1, 0]
+        pose.position.z -= place_hover_height*base_to_pose_mat[2, 0]
         return pose
 
     def determine_successor(self): # Determine next state
@@ -172,9 +172,9 @@ class Place(smach.State):
         ori = [pose.orientation.x, pose.orientation.y, pose.orientation.z, pose.orientation.w]
         listener = tf.TransformListener()
         base_to_pose_mat = listener.fromTranslationRotation(pos, ori) 
-        pose.position.x += (place_hover_height)*base_to_pose_mat[0, 2]
-        pose.position.y += (place_hover_height)*base_to_pose_mat[1, 2]
-        pose.position.z += (place_hover_height)*base_to_pose_mat[2, 2]
+        pose.position.x += (place_hover_height)*base_to_pose_mat[0, 0]
+        pose.position.y += (place_hover_height)*base_to_pose_mat[1, 0]
+        pose.position.z += (place_hover_height)*base_to_pose_mat[2, 0]
         return pose
 
     def determine_successor(self): # Determine next state
@@ -195,9 +195,9 @@ class MoveToPrePlacePoseWithEmptyHand(smach.State):
         ori = [pose.orientation.x, pose.orientation.y, pose.orientation.z, pose.orientation.w]
         listener = tf.TransformListener()
         base_to_pose_mat = listener.fromTranslationRotation(pos, ori) 
-        pose.position.x -= (place_hover_height)*base_to_pose_mat[0, 2]
-        pose.position.y -= (place_hover_height)*base_to_pose_mat[1, 2]
-        pose.position.z -= (place_hover_height)*base_to_pose_mat[2, 2]
+        pose.position.x -= (place_hover_height)*base_to_pose_mat[0, 0]
+        pose.position.y -= (place_hover_height)*base_to_pose_mat[1, 0]
+        pose.position.z -= (place_hover_height)*base_to_pose_mat[2, 0]
         return pose
 
     def determine_successor(self): # Determine next state
