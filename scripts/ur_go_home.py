@@ -10,8 +10,13 @@ if __name__ == '__main__':
     mc.roscpp_initialize(sys.argv) 
     rospy.init_node("ur_go_home", anonymous=True)
 
-    robot, group = get_moveit_vars()
-
+    robot = mc.RobotCommander()
+    group = mc.MoveGroupCommander("manipulator")
+    group.set_max_velocity_scaling_factor(1)
+    group.set_max_acceleration_scaling_factor(1)
+    group.set_goal_joint_tolerance(0.001)
+    group.set_goal_position_tolerance(0.001)
+    group.set_goal_orientation_tolerance(0.001)
     rospy.sleep(1)
 
     group.set_joint_value_target(hd.home_joint_angles)
