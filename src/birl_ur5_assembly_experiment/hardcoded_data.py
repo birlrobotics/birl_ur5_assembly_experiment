@@ -3,7 +3,7 @@ from math import pi
 
 home_joint_angles = {'elbow_joint': 0.17497304887828058, 'shoulder_pan_joint': -0.20654931216325778, 'wrist_3_joint': -1.5712312506130326, 'wrist_1_joint': -1.3959686479545823, 'shoulder_lift_joint': -1.3959885034992912, 'wrist_2_joint': -1.5704465265487269}
 
-get_vision_joint_angles = {'elbow_joint': 2.5755257093621164, 'shoulder_pan_joint': -0.17601812753047863, 'wrist_3_joint': -1.5659576718081425, 'wrist_1_joint': -2.5955913668696757, 'shoulder_lift_joint': -2.4471607016061503, 'wrist_2_joint': -1.5719682040147713}
+get_vision_joint_angles = {'elbow_joint': 1.920867552580697, 'shoulder_pan_joint': -0.20758247659601814, 'wrist_3_joint': -1.571011987780139, 'wrist_1_joint': -2.6161804421551356, 'shoulder_lift_joint': -1.7432639365387708, 'wrist_2_joint': -1.5704475466765233}
 
 ram_fixed_pick_pose = Pose(position=Point(x= 0.451817680005,y= -0.109643459126,z= 0.2228776902664), orientation=Quaternion(x= -0.379426608875,y= 0.598536950665,z= 0.354126316265,w= 0.610232348614))
 

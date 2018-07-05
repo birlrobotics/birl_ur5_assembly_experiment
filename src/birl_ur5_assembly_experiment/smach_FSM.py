@@ -46,6 +46,7 @@ class DeterminePickPose(smach.State):
         smach.State.__init__(self, outcomes=['GotOneFromVision', 'VisionSaysNone'])
         self.state_no = 0 # Skill tag
         self.depend_on_prev_state = False # Set this flag accordingly
+        self.visited = False
 
     def get_joint_state_goal(self):
         return copy.deepcopy(hardcoded_data.get_vision_joint_angles)
@@ -55,7 +56,10 @@ class DeterminePickPose(smach.State):
             # TODO: get pose from Shili's vision system
             raise Exception("TODO: get pose from Shili's vision system")
         else:
+            if self.visited:
+                return "VisionSaysNone"            
             DeterminePickPose.pick_pose = copy.deepcopy(hardcoded_data.ram_fixed_pick_pose)
+            self.visited = True
         return 'GotOneFromVision'
 
 class MoveToPrePickPoseWithEmptyHand(smach.State):
