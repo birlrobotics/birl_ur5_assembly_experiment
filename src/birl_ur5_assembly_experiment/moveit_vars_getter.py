@@ -3,6 +3,7 @@ from moveit_msgs.msg import Constraints, JointConstraint
 import hardcoded_data as hd
 from math import pi
 import numpy as np
+import ipdb
 
 def get_constraints():
     c = Constraints(name="ur5_constraint_for_assembly_experiment")
@@ -28,5 +29,5 @@ def get_moveit_vars():
     group.set_goal_orientation_tolerance(0.001)
     group.set_path_constraints(get_constraints())
     group.set_planning_time(10)
-    group.set_num_planning_attempts(100)
+    group.set_num_planning_attempts(10)
     return robot, group

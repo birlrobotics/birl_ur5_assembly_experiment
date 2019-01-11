@@ -12,6 +12,7 @@ from birl_ur5_assembly_experiment import hardcoded_data as hd
 from tf.transformations import (
     quaternion_from_matrix,
 )
+import ipdb
 
 def create_wall_by_box(wall_points, robot, psi, name):
     if len(wall_points) != 3:
@@ -35,7 +36,7 @@ def create_wall_by_box(wall_points, robot, psi, name):
 
     pos = vectors.mean(axis=0)
     quat = quaternion_from_matrix(mat)
-
+    
     psi.add_sphere(
         name="%s_center"%name, 
         pose=PoseStamped(
@@ -67,7 +68,7 @@ if __name__ == '__main__':
         name="the_desk", 
         pose=PoseStamped(
             header=Header(frame_id=robot.get_planning_frame()),
-            pose=Pose(position=Point(x=0, y=0 ,z=-desk_height/2.0), orientation=Quaternion(x=0, y=0, z=0, w=1))),
+            pose=Pose(position=Point(x=0, y=0 ,z=-desk_height/2.0-0.01), orientation=Quaternion(x=0, y=0, z=0, w=1))),
         size=(desk_length, desk_width, desk_height))
 
     for count, wall_pose in enumerate(itertools.chain(hd.left_wall_poses, hd.right_wall_poses)):
