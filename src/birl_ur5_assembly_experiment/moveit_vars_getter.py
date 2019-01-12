@@ -22,8 +22,8 @@ def get_constraints():
 def get_moveit_vars():
     robot = moveit_commander.RobotCommander()
     group = moveit_commander.MoveGroupCommander("manipulator")
-    group.set_max_velocity_scaling_factor(0.05)
-    group.set_max_acceleration_scaling_factor(0.05)
+    # group.set_max_velocity_scaling_factor(0.05)
+    # group.set_max_acceleration_scaling_factor(0.05)
     group.set_goal_joint_tolerance(0.001)
     group.set_goal_position_tolerance(0.001)
     group.set_goal_orientation_tolerance(0.001)
