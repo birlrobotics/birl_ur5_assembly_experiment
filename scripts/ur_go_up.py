@@ -12,24 +12,34 @@ if __name__ == '__main__':
 
     robot = mc.RobotCommander()
     group = mc.MoveGroupCommander("manipulator")
-    group.set_max_velocity_scaling_factor(1)
-    group.set_max_acceleration_scaling_factor(1)
-    group.set_goal_joint_tolerance(0.001)
-    group.set_goal_position_tolerance(0.001)
-    group.set_goal_orientation_tolerance(0.001)
-    rospy.sleep(1)
+    # group.set_max_velocity_scaling_factor(1)
+    # group.set_max_acceleration_scaling_factor(1)
+    # group.set_goal_joint_tolerance(0.001)
+    # group.set_goal_position_tolerance(0.001)
+    # group.set_goal_orientation_tolerance(0.001)
+    # rospy.sleep(1)
 
     cur_jointAngle = group.get_current_joint_values()
-    group.set_joint_value_target(cur_jointAngle)
-    plan = group.plan()
-    group.execute(plan)
-    
+
     group.set_joint_value_target(hd.up)
     plan = group.plan()
-    rospy.sleep(1)
-    group.execute(plan)
-    if not group.execute(plan):
-        raise Exception("exec failed")
+    curAngle = dict(zip(plan.joint_trajectory.joint_names,cur_jointAngle))
+    planStartAngle = dict(zip(plan.joint_trajectory.joint_names,plan.joint_trajectory.points[0].positions))
+    planEndAngle = dict(zip(plan.joint_trajectory.joint_names,plan.joint_trajectory.points[-1].positions))
 
-    rospy.sleep(1)
+    print "\n"
+    print "cur joint : %s\n" %curAngle
+    print "planed starting angle : %s\n" %planStartAngle
+    print "-"*20
+    print "\n"
+
+    print "desired angle : %s\n" %hd.up
+    print "planed ending angle : %s\n" %planEndAngle
+    # plan.joint_trajectory
+    # group.execute(plan)
+
+    # group.set_joint_value_target(hd.up)
+    # group.go(hd.up, wait=True)
+    # group.stop()
+    # rospy.sleep(1)
     mc.roscpp_shutdown()
