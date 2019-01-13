@@ -12,19 +12,20 @@ if __name__ == '__main__':
 
     robot = mc.RobotCommander()
     group = mc.MoveGroupCommander("manipulator")
-    group.set_max_velocity_scaling_factor(1)
-    group.set_max_acceleration_scaling_factor(1)
-    group.set_goal_joint_tolerance(0.001)
-    group.set_goal_position_tolerance(0.001)
-    group.set_goal_orientation_tolerance(0.001)
+    # group.set_max_velocity_scaling_factor(1)
+    # group.set_max_acceleration_scaling_factor(1)
+    # group.set_goal_joint_tolerance(0.001)
+    # group.set_goal_position_tolerance(0.001)
+    # group.set_goal_orientation_tolerance(0.001)
     rospy.sleep(1)
 
-    cur_jointAngle = group.get_current_joint_values()
-    group.set_joint_value_target(cur_jointAngle)
-    group.set_joint_value_target(hd.home_joint_angles)
+    group_variable_values = group.get_current_joint_values()
+    print "============ Joint values: ", group_variable_values
+
+    group.set_joint_value_target(hd.ram_fix_prepick_joint_angles)
     plan = group.plan()
     rospy.sleep(1)
-    group.execute(plan)
+    group.go(wait=True)
     if not group.execute(plan):
         raise Exception("exec failed")
 

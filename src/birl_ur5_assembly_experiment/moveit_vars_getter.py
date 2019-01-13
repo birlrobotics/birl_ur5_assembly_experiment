@@ -27,7 +27,7 @@ def get_moveit_vars():
     group.set_goal_joint_tolerance(0.001)
     group.set_goal_position_tolerance(0.001)
     group.set_goal_orientation_tolerance(0.001)
-    group.set_path_constraints(get_constraints())
+    # group.set_path_constraints(get_constraints())
     group.set_planning_time(10)
     group.set_num_planning_attempts(10)
     return robot, group

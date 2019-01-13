@@ -17,4 +17,6 @@ group = moveit_commander.MoveGroupCommander("manipulator")
 
 print "============ Reference frame: %s" % group.get_planning_frame()
 print "============ Reference frame: %s" % group.get_end_effector_link()
-print "============ Current end-effector: %s" % group.get_current_pose().pose
+print "============ joint names: %s" % group.get_joints()
+print "============ joint values: %s" % group.get_current_joint_values()
+print "============ joint dict: %s"%  dict(zip(group.get_joints(),group.get_current_joint_values() ))

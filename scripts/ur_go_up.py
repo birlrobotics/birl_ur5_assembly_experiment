@@ -21,7 +21,10 @@ if __name__ == '__main__':
 
     cur_jointAngle = group.get_current_joint_values()
     group.set_joint_value_target(cur_jointAngle)
-    group.set_joint_value_target(hd.home_joint_angles)
+    plan = group.plan()
+    group.execute(plan)
+    
+    group.set_joint_value_target(hd.up)
     plan = group.plan()
     rospy.sleep(1)
     group.execute(plan)
