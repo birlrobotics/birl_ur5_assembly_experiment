@@ -23,6 +23,7 @@ if __name__ == '__main__':
 
     group.set_joint_value_target(hd.up)
     plan = group.plan()
+    ipdb.set_trace()
     curAngle = dict(zip(plan.joint_trajectory.joint_names,cur_jointAngle))
     planStartAngle = dict(zip(plan.joint_trajectory.joint_names,plan.joint_trajectory.points[0].positions))
     planEndAngle = dict(zip(plan.joint_trajectory.joint_names,plan.joint_trajectory.points[-1].positions))

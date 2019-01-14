@@ -19,8 +19,6 @@ if __name__ == '__main__':
     group.set_goal_orientation_tolerance(0.001)
     rospy.sleep(1)
 
-    cur_jointAngle = group.get_current_joint_values()
-    group.set_joint_value_target(cur_jointAngle)
     group.set_joint_value_target(hd.home_joint_angles)
     plan = group.plan()
     rospy.sleep(1)
