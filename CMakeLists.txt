@@ -18,6 +18,7 @@ find_package(catkin REQUIRED COMPONENTS
   smach
   smach_based_introspection_framework
   std_msgs
+  message_generation
 )
 
 ## System dependencies are found with CMake's conventions
@@ -30,6 +31,15 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_python_setup()
 
 
+add_service_files(
+  FILES
+  ur_gripper.srv
+)
+
+generate_messages(
+  DEPENDENCIES
+  std_msgs  
+)
 
 ###################################
 ## catkin specific configuration ##
@@ -43,7 +53,7 @@ catkin_python_setup()
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES birl_ur5_assembly_experiment
-#  CATKIN_DEPENDS birl_dmp geometry_msgs moveit_core moveit_ros_planning moveit_ros_planning_interface roscpp rospy smach smach_based_introspection_framework std_msgs
+ CATKIN_DEPENDS birl_dmp geometry_msgs moveit_core moveit_ros_planning moveit_ros_planning_interface roscpp rospy smach smach_based_introspection_framework std_msgs
 #  DEPENDS system_lib
 )
 

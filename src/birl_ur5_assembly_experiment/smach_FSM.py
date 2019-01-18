@@ -21,6 +21,7 @@ from baxter_core_msgs.msg import (
 )
 import tf
 import moveit_commander as mc
+from linemod_pose_estimation.srv import linemod_pose,linemod_poseRequest
 
 SIM_MODE = True
 pick_hover_height = 0.05
@@ -53,8 +54,14 @@ class DeterminePickPose(smach.State):
 
     def determine_successor(self): # Determine next state
         if not SIM_MODE:
-            # TODO: get pose from Shili's vision system
-            raise Exception("TODO: get pose from Shili's vision system")
+            rospy.wait_for_service('linemod_object_pose')
+            try:
+                req = linemod_poseRequest()
+                req.object_id = 0
+                client = rospy.ServiceProxy('linemod_object_pose', linemod_pose)
+                resp = client(req)
+                DeterminePickPose.pick_pose = resp
+            # raise Exception("TODO: get pose from Shili's vision system")
         else:
             if self.visited:
                 return "VisionSaysNone"            

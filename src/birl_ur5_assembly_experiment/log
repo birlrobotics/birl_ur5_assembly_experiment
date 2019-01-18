@@ -1,0 +1,126 @@
+digital_in_states: 
+  - 
+    pin: 0
+    state: False
+  - 
+    pin: 1
+    state: False
+  - 
+    pin: 2
+    state: False
+  - 
+    pin: 3
+    state: False
+  - 
+    pin: 4
+    state: False
+  - 
+    pin: 5
+    state: False
+  - 
+    pin: 6
+    state: False
+  - 
+    pin: 7
+    state: False
+  - 
+    pin: 8
+    state: False
+  - 
+    pin: 9
+    state: False
+  - 
+    pin: 10
+    state: False
+  - 
+    pin: 11
+    state: False
+  - 
+    pin: 12
+    state: False
+  - 
+    pin: 13
+    state: False
+  - 
+    pin: 14
+    state: False
+  - 
+    pin: 15
+    state: False
+  - 
+    pin: 16
+    state: False
+  - 
+    pin: 17
+    state: False
+digital_out_states: 
+  - 
+    pin: 0
+    state: False
+  - 
+    pin: 1
+    state: False
+  - 
+    pin: 2
+    state: False
+  - 
+    pin: 3
+    state: False
+  - 
+    pin: 4
+    state: False
+  - 
+    pin: 5
+    state: False
+  - 
+    pin: 6
+    state: False
+  - 
+    pin: 7
+    state: False
+  - 
+    pin: 8
+    state: False
+  - 
+    pin: 9
+    state: False
+  - 
+    pin: 10
+    state: False
+  - 
+    pin: 11
+    state: False
+  - 
+    pin: 12
+    state: False
+  - 
+    pin: 13
+    state: False
+  - 
+    pin: 14
+    state: False
+  - 
+    pin: 15
+    state: False
+  - 
+    pin: 16
+    state: False
+  - 
+    pin: 17
+    state: False
+flag_states: []
+analog_in_states: 
+  - 
+    pin: 0
+    state: 0.0563967227936
+  - 
+    pin: 1
+    state: 0.00402808189392
+analog_out_states: 
+  - 
+    pin: 0
+    state: 0.00400000018999
+  - 
+    pin: 1
+    state: 0.00400000018999
+---
