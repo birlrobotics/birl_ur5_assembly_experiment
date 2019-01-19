@@ -22,8 +22,6 @@ from baxter_core_msgs.msg import (
 import tf
 import moveit_commander as mc
 from linemod_pose_estimation.srv import linemod_pose,linemod_poseRequest
-from birl_ur5_assembly_experiment.srv import ur_gripper, ur_gripperRequest,ur_gripperResponse
-from geometry_msgs.msg import Pose
 
 SIM_MODE = True
 pick_hover_height = 0.05
@@ -36,7 +34,7 @@ class MoveToHomePose(smach.State):
         self.depend_on_prev_state = False # Set this flag accordingly
 
     def get_joint_state_goal(self):
-        return copy.deepcopy(hardcoded_data.natural_jointAngle)
+        return copy.deepcopy(hardcoded_data.home_joint_angles)
 
     def determine_successor(self): # Determine next state
         return 'Successful'
@@ -52,29 +50,23 @@ class DeterminePickPose(smach.State):
         self.visited = False
 
     def get_joint_state_goal(self):
-        return copy.deepcopy(hardcoded_data.camera_detection_jointAngle)
+        return copy.deepcopy(hardcoded_data.get_vision_joint_angles)
 
-    # def determine_successor(self): # Determine next state
-    #     if not SIM_MODE:
-    #         rospy.wait_for_service('linemod_object_pose')
-    #         try:
-    #             req = linemod_poseRequest()
-    #             req.object_id = 0
-    #             client = rospy.ServiceProxy('linemod_object_pose', linemod_pose)
-    #             resp = client(req)
-    #             tmp = Pose()
-    #             tmp.position = resp.transition
-    #             tmp.orientation = resp.rotation
-    #             DeterminePickPose.pick_pose = tmp
-
-    #         # raise Exception("TODO: get pose from Shili's vision system")
-    #     else:
-    #         if self.visited:
-    #             return "VisionSaysNone"            
-    #         DeterminePickPose.pick_pose = copy.deepcopy(hardcoded_data.ram_fixed_pick_pose)
-    #         self.visited = True
-    #     return 'GotOneFromVision'
     def determine_successor(self): # Determine next state
+        if not SIM_MODE:
+            rospy.wait_for_service('linemod_object_pose')
+            try:
+                req = linemod_poseRequest()
+                req.object_id = 0
+                client = rospy.ServiceProxy('linemod_object_pose', linemod_pose)
+                resp = client(req)
+                DeterminePickPose.pick_pose = resp
+            # raise Exception("TODO: get pose from Shili's vision system")
+        else:
+            if self.visited:
+                return "VisionSaysNone"            
+            DeterminePickPose.pick_pose = copy.deepcopy(hardcoded_data.ram_fixed_pick_pose)
+            self.visited = True
         return 'GotOneFromVision'
 
 class MoveToPrePickPoseWithEmptyHand(smach.State):
@@ -84,10 +76,16 @@ class MoveToPrePickPoseWithEmptyHand(smach.State):
         self.depend_on_prev_state = True # Set this flag accordingly
 
 
-    def get_joint_state_goal(self):
-        return copy.deepcopy(hardcoded_data.prepick_jointAngle)
+    def get_pose_goal(self):
+        pose = copy.deepcopy(DeterminePickPose.pick_pose)
+        pos = pose.position
+        ori = pose.orientation
+        base_to_pose_mat = numpy.dot(translation_matrix((pos.x, pos.y, pos.z)), quaternion_matrix((ori.x, ori.y, ori.z, ori.w)))
+        pose.position.x -= pick_hover_height*base_to_pose_mat[0, 0]
+        pose.position.y -= pick_hover_height*base_to_pose_mat[1, 0]
+        pose.position.z -= pick_hover_height*base_to_pose_mat[2, 0]
+        return pose
 
-    
     def determine_successor(self): # Determine next state
         return 'Successful'
 
@@ -98,27 +96,16 @@ class Pick(smach.State):
         self.depend_on_prev_state = True # Set this flag accordingly
 
     def before_motion(self):
-        # rospy.wait_for_service('ur_gripper_switch',timeout=3)
-        # try:
-        #     req = ur_gripperRequest()
-        #     req.state = "open"
-        #     client = rospy.ServiceProxy('ur_gripper_switch', ur_gripper)
-        #     res = client(req)
-        # except rospy.ServiceException, e:
-        #     rospy.loginfo("Service call failed: %s"%e)
-        pass
-    def after_motion(self):
-        # try:
-        #     req = ur_gripperRequest()
-        #     req.state = "close"
-        #     client = rospy.ServiceProxy('ur_gripper_switch', ur_gripper)
-        #     res = client(req)
-        # except rospy.ServiceException, e:
-        #     rospy.loginfo("Service call failed: %s"%e)
+        # TODO: need API for gripper and sucker
         pass
 
-    def get_joint_state_goal(self):
-        return copy.deepcopy(hardcoded_data.pick_jointAngle)
+    def after_motion(self):
+        # TODO: need API for gripper and sucker
+        pass
+
+    def get_pose_goal(self):
+        pose = copy.deepcopy(DeterminePickPose.pick_pose)
+        return pose
 
     def determine_successor(self): # Determine next state
         return 'Successful'
@@ -129,9 +116,18 @@ class MoveToPrePickPoseWithFullHand(smach.State):
         self.state_no = 5 # Skill tag
         self.depend_on_prev_state = True # Set this flag accordingly
 
-
-    def get_joint_state_goal(self):
-        return copy.deepcopy(hardcoded_data.prepick_jointAngle)
+    def get_pose_goal(self):
+        robot = mc.RobotCommander()
+        move_group = robot.get_group("manipulator")
+        pose = move_group.get_current_pose().pose
+        pos = [pose.position.x, pose.position.y, pose.position.z]
+        ori = [pose.orientation.x, pose.orientation.y, pose.orientation.z, pose.orientation.w]
+        listener = tf.TransformListener()
+        base_to_pose_mat = listener.fromTranslationRotation(pos, ori) 
+        pose.position.x -= pick_hover_height*base_to_pose_mat[0, 0]
+        pose.position.y -= pick_hover_height*base_to_pose_mat[1, 0]
+        pose.position.z -= pick_hover_height*base_to_pose_mat[2, 0]
+        return pose
 
     def determine_successor(self): # Determine next state
         return 'Successful'
@@ -145,7 +141,7 @@ class DeterminePlacePose(smach.State):
         self.depend_on_prev_state = False # Set this flag accordingly
 
     def determine_successor(self): # Determine next state
-        # DeterminePlacePose.place_pose = copy.deepcopy(hardcoded_data.ram_fixed_place_pose)
+        DeterminePlacePose.place_pose = copy.deepcopy(hardcoded_data.ram_fixed_place_pose)
         return 'Successful'
 
 class MoveToPrePlacePoseWithFullHand(smach.State):
@@ -154,8 +150,16 @@ class MoveToPrePlacePoseWithFullHand(smach.State):
         self.state_no = 7 # Skill tag
         self.depend_on_prev_state = True # Set this flag accordingly
 
-    def get_joint_state_goal(self):
-        return copy.deepcopy(hardcoded_data.preplace_jointAngle)
+
+    def get_pose_goal(self):
+        pose = copy.deepcopy(DeterminePlacePose.place_pose)
+        pos = pose.position
+        ori = pose.orientation
+        base_to_pose_mat = numpy.dot(translation_matrix((pos.x, pos.y, pos.z)), quaternion_matrix((ori.x, ori.y, ori.z, ori.w)))
+        pose.position.x -= place_hover_height*base_to_pose_mat[0, 0]
+        pose.position.y -= place_hover_height*base_to_pose_mat[1, 0]
+        pose.position.z -= place_hover_height*base_to_pose_mat[2, 0]
+        return pose
 
     def determine_successor(self): # Determine next state
         return 'Successful'
@@ -167,18 +171,22 @@ class Place(smach.State):
         self.depend_on_prev_state = True # Set this flag accordingly
 
     def after_motion(self):
-        # try:
-        #     req = ur_gripperRequest()
-        #     req.state = "close"
-        #     client = rospy.ServiceProxy('ur_gripper_switch', ur_gripper)
-        #     res = client(req)
-        # except rospy.ServiceException, e:
-        #     rospy.loginfo("Service call failed: %s"%e)
+        # TODO: need API for gripper and sucker
         pass
 
 
-    def get_joint_state_goal(self):
-        return copy.deepcopy(hardcoded_data.place_jointAngle)
+    def get_pose_goal(self):
+        robot = mc.RobotCommander()
+        move_group = robot.get_group("manipulator")
+        pose = move_group.get_current_pose().pose
+        pos = [pose.position.x, pose.position.y, pose.position.z]
+        ori = [pose.orientation.x, pose.orientation.y, pose.orientation.z, pose.orientation.w]
+        listener = tf.TransformListener()
+        base_to_pose_mat = listener.fromTranslationRotation(pos, ori) 
+        pose.position.x += (place_hover_height)*base_to_pose_mat[0, 0]
+        pose.position.y += (place_hover_height)*base_to_pose_mat[1, 0]
+        pose.position.z += (place_hover_height)*base_to_pose_mat[2, 0]
+        return pose
 
     def determine_successor(self): # Determine next state
         DeterminePlacePose.already_plac_count += 1
@@ -190,8 +198,18 @@ class MoveToPrePlacePoseWithEmptyHand(smach.State):
         self.state_no = 9 # Skill tag
         self.depend_on_prev_state = True # Set this flag accordingly
 
-    def get_joint_state_goal(self):
-        return copy.deepcopy(hardcoded_data.preplace_jointAngle)
+    def get_pose_goal(self):
+        robot = mc.RobotCommander()
+        move_group = robot.get_group("manipulator")
+        pose = move_group.get_current_pose().pose
+        pos = [pose.position.x, pose.position.y, pose.position.z]
+        ori = [pose.orientation.x, pose.orientation.y, pose.orientation.z, pose.orientation.w]
+        listener = tf.TransformListener()
+        base_to_pose_mat = listener.fromTranslationRotation(pos, ori) 
+        pose.position.x -= (place_hover_height)*base_to_pose_mat[0, 0]
+        pose.position.y -= (place_hover_height)*base_to_pose_mat[1, 0]
+        pose.position.z -= (place_hover_height)*base_to_pose_mat[2, 0]
+        return pose
 
     def determine_successor(self): # Determine next state
         return 'Successful'

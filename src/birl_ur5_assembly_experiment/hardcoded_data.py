@@ -1,20 +1,25 @@
 from geometry_msgs.msg import Pose, Point, Quaternion
 from math import pi
 
-up = {'elbow_joint': -4.2617535722655475e-07, 'shoulder_pan_joint': -0.00010364929556594404, 'wrist_3_joint': 2.7088180305057108e-05, 'wrist_1_joint': -1.570700020101965, 'shoulder_lift_joint': -1.5707001159590872, 'wrist_2_joint': 4.447031563525883e-05}
-home_joint_angles = {'elbow_joint': -0.7103890179035215, 'shoulder_pan_joint': 2.5046971609102187, 'wrist_3_joint': -1.2904286064346557, 'wrist_1_joint': -0.3825551937260574, 'shoulder_lift_joint': -2.230709533847964, 'wrist_2_joint': 1.7475283280977791}
 
-get_vision_joint_angles = {'elbow_joint': 1.5563100940033436, 'shoulder_pan_joint': 1.599943325303202, 'wrist_3_joint': 4.760734600664932, 'wrist_1_joint': -0.9086184085882479, 'shoulder_lift_joint': -3.30565360327726, 'wrist_2_joint': -1.6620770466742}
+camera_detection_jointAngle = {'elbow_joint': 1.4735589027404785, 'shoulder_pan_joint': 1.986021637916565, 'wrist_3_joint': -1.2961767355548304, 
+'wrist_1_joint': -0.7861869970904749, 'shoulder_lift_joint': -3.154273335133688, 'wrist_2_joint': -1.7274764219867151}
 
-ram_fix_prepick_joint_angles = {'elbow_joint': 0.15501022338867188, 'shoulder_pan_joint': 1.6229989528656006, 'wrist_3_joint': -1.9266837278949183, 'wrist_1_joint': -1.0626185576068323, 'shoulder_lift_joint': -0.7709811369525355, 'wrist_2_joint': -1.5327757040606897}
+natural_jointAngle={'elbow_joint': 1.401339054107666, 'shoulder_pan_joint': 1.9879260063171387, 'wrist_3_joint': -1.2952893416034144, 
+'wrist_1_joint': -1.147008244191305, 'shoulder_lift_joint': -2.194500748311178, 'wrist_2_joint': -1.7298420111285608}
 
-ram_fix_place_joint_angles = {'elbow_joint': 1.206188678741455, 'shoulder_pan_joint': 2.406372547149658, 'wrist_3_joint': -2.029276672993795, 'wrist_1_joint': -1.7258947531329554, 'shoulder_lift_joint': -0.9697883764850062, 'wrist_2_joint': -1.561734978352682}
+prepick_jointAngle ={'elbow_joint': 1.2553682327270508, 'shoulder_pan_joint': 1.358418345451355, 'wrist_3_joint': -1.9963386694537562, 
+'wrist_1_joint': -1.4977968374835413, 'shoulder_lift_joint': -1.4115403334247034, 'wrist_2_joint': -1.5743301550494593}
 
-# ram_fix_preplace_joint_angles = {'elbow_joint': 0.6660176425610361, 'shoulder_pan_joint': 2.423040600543728, 'wrist_3_joint': 4.326671215693943, 'wrist_1_joint': -1.2110839679588652, 'shoulder_lift_joint': -1.0196213490150872, 'wrist_2_joint': -1.5828390986336576}
+pick_jointAngle = {'elbow_joint': 1.8152494430541992, 'shoulder_pan_joint': 1.3587898015975952, 'wrist_3_joint': -1.9990957419024866, 
+'wrist_1_joint': -2.1557844320880335, 'shoulder_lift_joint': -1.3135893980609339, 'wrist_2_joint': -1.5732248465167444}
 
-ram_fixed_pick_pose = Pose(position=Point(x = -0.138408301693, y= 0.435841054208 , z=0.372693844976), orientation=Quaternion(x = -0.977445487723, y= -0.20332695755, z= 0.0106146586855, w= 0.0560873950606))
+preplace_jointAngle = {'elbow_joint': 1.2688817977905273, 'shoulder_pan_joint': 2.579735279083252, 'wrist_3_joint': -1.996518913899557, 
+'wrist_1_joint': -1.5229499975787562, 'shoulder_lift_joint': -1.4303253332721155, 'wrist_2_joint': -1.5743182341205042}    
 
-# ram_fixed_place_pose = Pose(position=Point(x= 0.0619293125068,y= 0.398280870516,z= 0.243341303728), orientation=Quaternion(x= -0.693673760483,y= 0.145193951023,z= 0.687426384229,w= 0.158683322592))
+place_jointAngle =  {'elbow_joint': 1.811680793762207, 'shoulder_pan_joint': 2.5800344944000244, 'wrist_3_joint': -1.9991076628314417, 'wrist_1_joint': 
+-2.14612847963442, 'shoulder_lift_joint': -1.3499401251422327, 'wrist_2_joint': -1.5731647650348108}
+
 
 joint_constraints_in_degrees = {
     'shoulder_pan_joint': [-34, 75],

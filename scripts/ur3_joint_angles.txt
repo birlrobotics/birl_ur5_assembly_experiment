@@ -1,0 +1,12 @@
+camera_detection_jointAngle
+joint dict: {'elbow_joint': 1.4735589027404785, 'shoulder_pan_joint': 1.986021637916565, 'wrist_3_joint': -1.2961767355548304, 'wrist_1_joint': -0.7861869970904749, 'shoulder_lift_joint': -3.154273335133688, 'wrist_2_joint': -1.7274764219867151}
+
+
+natural_jointAngle
+joint dict: {'elbow_joint': 1.401339054107666, 'shoulder_pan_joint': 1.9879260063171387, 'wrist_3_joint': -1.2952893416034144, 'wrist_1_joint': -1.147008244191305, 'shoulder_lift_joint': -2.194500748311178, 'wrist_2_joint': -1.7298420111285608}
+
+pick_jointAngle
+joint dict: {'elbow_joint': 1.8598976135253906, 'shoulder_pan_joint': 1.4055874347686768, 'wrist_3_joint': -1.5547364393817347, 'wrist_1_joint': -1.9995253721820276, 'shoulder_lift_joint': -1.4303372542010706, 'wrist_2_joint': -1.5760586897479456}
+
+place_jointAngle
+joint dict: {'elbow_joint': 1.8053574562072754, 'shoulder_pan_joint': 2.395463228225708, 'wrist_3_joint': -1.1488454977618616, 'wrist_1_joint': -1.990323845540182, 'shoulder_lift_joint': -1.3850205580340784, 'wrist_2_joint': -1.575890843068258}

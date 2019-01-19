@@ -68,3 +68,6 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
+
+add_executable(gripper_switch_server node/gripper_switch_server.cpp)
+target_link_libraries(gripper_switch_server ${catkin_LIBRARIES})

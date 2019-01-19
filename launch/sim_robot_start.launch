@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <launch>
-  <arg name="limited" default="true"/>
+  <arg name="limited" default="false"/>
   <arg name="moveitRvizConfig" default="true"/>
   <arg name="sim" default="true"/>
   <include file="$(find ur_gazebo)/launch/ur3.launch">
